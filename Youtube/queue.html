@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://casterlabs.co/util.js"></script>
+        <script src="https://www.youtube.com/iframe_api"></script>
+        <script>
+            var player;
+            var queue = [];
+
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player("player", {
+                    width: "1280",
+                    height: "720",
+                    events: {
+                        "onStateChange": (event) => {
+                            console.log(event.data);
+
+                            if (event.data == YT.PlayerState.UNSTARTED) {
+                                player.playVideo();
+                            } else if (event.data == YT.PlayerState.ENDED) {
+                                getNextInQueue();
+                            }
+                        }
+                    }
+                });
+            }
+
+            document.addEventListener("keyup", (e) => {
+                if (e.code === "KeyN") {
+                    getNextInQueue();
+                }
+            });
+
+            function getNextInQueue() {
+                if (queue.length != 0) {
+                    player.cueVideoByUrl(queue[0]);
+                    queue.shift();
+                } else {
+                    setTimeout(getNextInQueue, 1000);
+                }
+            }
+
+            async function skip() {
+                getNextInQueue();
+                player.nextVideo();
+            }
+
+            async function play(link) {
+                let response = httpGet("https://api.casterlabs.co/overlays/youtube.php?url=" + link);
+
+                if (response != "Not Found") {
+                    let dummy = document.createElement("html");
+
+                    dummy.innerHTML = JSON.parse(response)["html"];
+                    queue.push(dummy.getElementsByTagName("iframe")[0].src);
+                }
+            }
+
+            function httpGet(url) {
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", url, false);
+                xhr.send(null);
+
+                return xhr.responseText;
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id="player"></div>
+    </body>
+
+</html>
