@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <script src="https://www.youtube.com/iframe_api"></script>
         <script>
@@ -12,8 +13,6 @@
                     height: "720",
                     events: {
                         "onStateChange": (event) => {
-                            console.log(event.data);
-
                             if (event.data == YT.PlayerState.UNSTARTED) {
                                 player.playVideo();
                             } else if (event.data == YT.PlayerState.ENDED) {
@@ -24,12 +23,6 @@
                 });
             }
 
-            document.addEventListener("keyup", (e) => {
-                if (e.code === "KeyN") {
-                    getNextInQueue();
-                }
-            });
-
             function getNextInQueue() {
                 if (queue.length != 0) {
                     player.cueVideoByUrl(queue[0]);
@@ -39,9 +32,9 @@
                 }
             }
 
-			async function pause() {
-				player.pauseVideo();
-			}
+            async function pause() {
+                player.pauseVideo();
+            }
 
             async function skip() {
                 getNextInQueue();
