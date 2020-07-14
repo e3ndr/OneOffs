@@ -39,6 +39,7 @@
             }
 
             async function skip() {
+                titles.shift();
                 getNextInQueue();
                 player.seekTo(Number.MAX_SAFE_INTEGER);
             }
