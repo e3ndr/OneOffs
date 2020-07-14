@@ -4,8 +4,9 @@
     <head>
         <script src="https://www.youtube.com/iframe_api"></script>
         <script>
-            var player;
-            var queue = [];
+            let player;
+            let queue = [];
+            let titles = [];
 
             function onYouTubeIframeAPIReady() {
                 player = new YT.Player("player", {
@@ -16,6 +17,7 @@
                             if (event.data == YT.PlayerState.UNSTARTED) {
                                 player.playVideo();
                             } else if (event.data == YT.PlayerState.ENDED) {
+                                titles.shift();
                                 getNextInQueue();
                             }
                         }
@@ -42,12 +44,16 @@
             }
 
             async function play(link) {
+                player.playVideo();
+
                 let response = httpGet("https://api.casterlabs.co/overlays/youtube.php?url=" + link);
 
                 if (response != "Not Found") {
                     let dummy = document.createElement("html");
+                    let json = JSON.parse(response);
 
-                    dummy.innerHTML = JSON.parse(response)["html"];
+                    titles.push(json.title);
+                    dummy.innerHTML = json.html;
                     queue.push(dummy.getElementsByTagName("iframe")[0].src);
                 }
             }
