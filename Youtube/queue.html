@@ -45,8 +45,6 @@
             }
 
             async function play(link) {
-                player.playVideo();
-
                 let response = httpGet("https://api.casterlabs.co/overlays/youtube.php?url=" + link);
 
                 if (response != "Not Found") {
