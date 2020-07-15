@@ -29,7 +29,7 @@
                 if (queue.length != 0) {
                     player.cueVideoByUrl(queue[0]);
                     queue.shift();
-                } else if (event.data != YT.PlayerState.PLAYING) {
+                } else if (player.getPlayerState() != YT.PlayerState.PLAYING) {
                     setTimeout(getNextInQueue, 1000);
                 }
             }
