@@ -29,7 +29,7 @@
                 if (queue.length != 0) {
                     player.cueVideoByUrl(queue[0]);
                     queue.shift();
-                } else {
+                } else if (event.data != YT.PlayerState.PLAYING) {
                     setTimeout(getNextInQueue, 1000);
                 }
             }
@@ -45,6 +45,8 @@
             }
 
             async function play(link) {
+                player.playVideo();
+
                 let response = httpGet("https://api.casterlabs.co/overlays/youtube.php?url=" + link);
 
                 if (response != "Not Found") {
