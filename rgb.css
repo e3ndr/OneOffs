@@ -1,0 +1,45 @@
+.rgb {
+    -webkit-animation: rgb 10s infinite alternate;
+}
+
+@-webkit-keyframes rgb {
+    0% {
+        color: #FF0000;
+    }
+    8.3% {
+        color: #FF8000;
+    }
+    16.6% {
+        color: #FFFF00;
+    }
+    24.9% {
+        color: #80FF00;
+    }
+    33.2% {
+        color: #00FF00;
+    }
+    41.5% {
+        color: #00FF80;
+    }
+    49.8% {
+        color: #00FFFF;
+    }
+    58.1% {
+        color: #00FFFF;
+    }
+    66.4% {
+        color: #0080FF;
+    }
+    74.7% {
+        color: #0000FF;
+    }
+    83% {
+        color: #7F00FF;
+    }
+    91.3% {
+        color: #FF00FF;
+    }
+    100% {
+        color: #FF007F;
+    }
+}
