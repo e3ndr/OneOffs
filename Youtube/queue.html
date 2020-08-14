@@ -47,7 +47,7 @@
             async function play(link) {
                 player.playVideo();
 
-                let response = httpGet("https://api.casterlabs.co/overlays/youtube.php?url=" + link);
+                let response = httpGet("https://api.casterlabs.co/proxy/youtube/oembed/" + link);
 
                 if (response != "Not Found") {
                     let dummy = document.createElement("html");
